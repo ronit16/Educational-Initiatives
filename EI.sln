@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHomeAutomationSystem", "SmartHomeAutomationSystem\SmartHomeAutomationSystem.csproj", "{92E81099-0D99-42D5-A47D-312236B5AC9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FraudDetectionSystem", "FraudDetectionSystem\FraudDetectionSystem.csproj", "{BDE17635-D37C-40FF-85D4-3E3A374D63F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92E81099-0D99-42D5-A47D-312236B5AC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92E81099-0D99-42D5-A47D-312236B5AC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92E81099-0D99-42D5-A47D-312236B5AC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92E81099-0D99-42D5-A47D-312236B5AC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE17635-D37C-40FF-85D4-3E3A374D63F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE17635-D37C-40FF-85D4-3E3A374D63F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE17635-D37C-40FF-85D4-3E3A374D63F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE17635-D37C-40FF-85D4-3E3A374D63F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F689DF0-32F5-4E32-B4AF-47256280DFDD}
+	EndGlobalSection
+EndGlobal
