@@ -11,9 +11,9 @@ namespace SmartOffice
             _office = OfficeConfig.Instance;
         }
 
-        public void BookRoom(string roomId, int duration)
+        public void BookRoom(string roomId, DateTime startTime, int duration)
         {
-            _office.BookRoom(roomId, duration);
+            _office.BookRoom(roomId, startTime, duration);
         }
 
         public void CancelBooking(string roomId)

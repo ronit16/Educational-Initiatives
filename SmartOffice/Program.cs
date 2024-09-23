@@ -83,14 +83,23 @@ namespace SmartOffice
                             if (int.TryParse(Console.ReadLine(), out int roomNum) && roomNum > 0)
                             {
                                 string roomId = $"Room {roomNum}";
-                                Console.Write("Enter duration in minutes: ");
-                                if (int.TryParse(Console.ReadLine(), out int duration) && duration > 0)
+
+                                Console.Write("Enter booking start time (HH:mm): ");
+                                if (DateTime.TryParseExact(Console.ReadLine(), "HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime startTime))
                                 {
-                                    user.BookRoom(roomId, duration);
+                                    Console.Write("Enter duration in minutes: ");
+                                    if (int.TryParse(Console.ReadLine(), out int duration) && duration > 0)
+                                    {
+                                        user.BookRoom(roomId, startTime, duration);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Invalid duration.");
+                                    }
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Invalid duration.");
+                                    Console.WriteLine("Invalid time format. Please use HH:mm.");
                                 }
                             }
                             else

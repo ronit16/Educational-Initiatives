@@ -41,11 +41,11 @@ namespace SmartOffice
             }
         }
 
-        public void BookRoom(string roomId, int duration)
+        public void BookRoom(string roomId, DateTime startTime, int duration)
         {
             if (Rooms.TryGetValue(roomId, out Room room) && !room.IsBooked)
             {
-                room.Book(duration);
+                room.Book(startTime,duration);
             }
             else
             {

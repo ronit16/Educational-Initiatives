@@ -6,16 +6,17 @@ namespace SmartOffice
     {
         public string Name { get; }
         public int Occupancy { get; private set; }
-        public bool IsBooked { get; private set; }
+        // public bool IsBooked { get; private set; }
+        public bool IsBooked => BookingStartTime.HasValue && BookingDuration.HasValue;
+        public DateTime? BookingStartTime { get; private set; }
         public int MaxCapacity { get; private set; }
-        private DateTime? _bookingTime;
+        private int? BookingDuration;
         private Sensor _sensor;
 
         public Room(string name)
         {
             Name = name;
             Occupancy = 0;
-            IsBooked = false;
             MaxCapacity = 0;
             _sensor = new Sensor(this);
         }
@@ -25,20 +26,31 @@ namespace SmartOffice
             MaxCapacity = capacity;
         }
 
-        public void Book(int duration)
+        public void Book(DateTime startTime,int duration)
         {
-            IsBooked = true;
-            _bookingTime = DateTime.Now;
+            if (IsBookingConflict(startTime, duration))
+            {
+                Console.WriteLine($"Room {Name} is already booked during this time. Cannot book.");
+                return;
+            }
+            BookingStartTime = startTime;
+            BookingDuration = duration;
             OfficeConfig.Instance.IncrementTotalBookings();
-            Console.WriteLine($"{Name} booked for {duration} minutes.");
+            Console.WriteLine($"Room {Name} booked from {startTime.ToString("HH:mm")} for {duration} minutes.");
         }
 
         public void Cancel()
         {
-            IsBooked = false;
+            if (!IsBooked)
+            {
+                Console.WriteLine($"Room {Name} is not booked. Cannot cancel booking.");
+                return;
+            }
+
+            BookingStartTime = null;
+            BookingDuration = null;
+            Console.WriteLine($"Booking for Room {Name} cancelled successfully.");
             Occupancy = 0;
-            _bookingTime = null;
-            Console.WriteLine($"Booking for {Name} cancelled successfully.");
         }
 
         public void AddOccupants(int count)
@@ -73,7 +85,8 @@ namespace SmartOffice
         {
             if (IsBooked)
             {
-                Console.WriteLine($"{Name} is booked.");
+                DateTime endTime = BookingStartTime.Value.AddMinutes(BookingDuration.Value);
+                Console.WriteLine($"Room {Name} is booked from {BookingStartTime.Value.ToString("HH:mm")} to {endTime.ToString("HH:mm")}");
             }
             else
             {
@@ -83,11 +96,30 @@ namespace SmartOffice
 
         public void ReleaseBookingIfNecessary()
         {
-            if (IsBooked && _bookingTime.HasValue && (DateTime.Now - _bookingTime.Value).TotalMinutes > 5)
+            if (IsBooked && BookingStartTime.HasValue && BookingDuration.HasValue)
             {
-                Cancel();
-                NotificationService.NotifyRoomReleased(Name);
+                DateTime bookingEndTime = BookingStartTime.Value.AddMinutes(BookingDuration.Value);
+                
+                if ((DateTime.Now - bookingEndTime).TotalMinutes > 5)
+                {
+                    Cancel();
+                    NotificationService.NotifyRoomReleased(Name);
+                }
             }
+        }
+
+
+        private bool IsBookingConflict(DateTime newStartTime, int newDuration)
+        {
+            if (!IsBooked) return false;
+
+            DateTime existingEndTime = BookingStartTime.Value.AddMinutes(BookingDuration.Value);
+            DateTime newEndTime = newStartTime.AddMinutes(newDuration);
+
+            // Check if the new booking overlaps with the current booking
+            bool conflict = newStartTime < existingEndTime && newEndTime > BookingStartTime.Value;
+
+            return conflict;
         }
     }
 }
