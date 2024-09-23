@@ -84,7 +84,7 @@ namespace SmartOffice
                             {
                                 string roomId = $"Room {roomNum}";
                                 Console.Write("Enter duration in minutes: ");
-                                if (int.TryParse(Console.ReadLine(), out int duration))
+                                if (int.TryParse(Console.ReadLine(), out int duration) && duration > 0)
                                 {
                                     user.BookRoom(roomId, duration);
                                 }

@@ -43,6 +43,12 @@ namespace SmartOffice
 
         public void AddOccupants(int count)
         {
+            // if count is 0 then remove all ocupant and turn of the lights
+            if (count == 0)
+            {
+                RemoveOccupants();
+                return;
+            } 
             if (Occupancy + count > MaxCapacity)
             {
                 Console.WriteLine($"{Name} occupancy insufficient to mark as occupied. Max capacity is {MaxCapacity}.");
@@ -60,7 +66,7 @@ namespace SmartOffice
         {
             Occupancy = 0;
             _sensor.DetectVacancy();
-            Console.WriteLine($"{Name} is now unoccupied. AC and lights turned off.");
+            Console.WriteLine($"{Name} is now occupied by {Occupancy} persons.");
         }
 
         public void CheckStatus()
